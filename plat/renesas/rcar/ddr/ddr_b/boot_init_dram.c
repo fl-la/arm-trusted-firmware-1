@@ -3707,6 +3707,7 @@ static uint32_t rx_offset_cal_hw(void)
 	uint32_t tmp;
 	uint32_t tmp_ach_as[DRAM_CH_CNT][SLICE_CNT];
 
+	ddr_setval_ach_as(_reg_PHY_IE_MODE, 0x01);
 	ddr_setval_ach_as(_reg_PHY_RX_CAL_X[9], 0x00);
 	ddr_setval_ach_as(_reg_PHY_RX_CAL_OVERRIDE, 0x00);
 	ddr_setval_ach_as(_reg_PHY_RX_CAL_SAMPLE_WAIT, 0x0f);
@@ -3740,7 +3741,7 @@ static uint32_t rx_offset_cal_hw(void)
 
 		retry++;
 	}
-
+ddr_setval_ach_as(_reg_PHY_IE_MODE,ddrtbl_getval(_cnf_DDR_PHY_SLICE_REGSET, _reg_PHY_IE_MODE));
 	return (complete == 0);
 }
 
